@@ -245,7 +245,7 @@ class AVLTreeList(object):
 	@returns: the value of the first item, None if the list is empty
 	"""
 	def first(self):
-		return None
+		return self.first
 
 	"""returns the value of the last item in the list
 
@@ -253,23 +253,40 @@ class AVLTreeList(object):
 	@returns: the value of the last item, None if the list is empty
 	"""
 	def last(self):
-		return None
+		return self.last
 
-	"""returns an array representing list 
+	"""returns an array representing list (in order)
 
 	@rtype: list
 	@returns: a list of strings representing the data structure
 	"""
 	def listToArray(self):
-		return None
+		node = self.first
+		array = [node]
+		for i in range(self.length):
+			nextNode = successor(node)
+			if nextNode != None:
+				array.append(nextNode)
+			node = nextNode
 
+		return array
+
+
+	"""returns the node that contains the next item in the list
+
+	@rtype: node
+	@returns: a node that contains the next item in the list
+	"""
+	def successor(node):
+		return
+		
 	"""returns the size of the list 
 
 	@rtype: int
 	@returns: the size of the list
 	"""
 	def length(self):
-		return None
+		return self.length
 
 	"""sort the info values of the list
 
