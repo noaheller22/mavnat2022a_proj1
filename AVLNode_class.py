@@ -209,7 +209,7 @@ class AVLTreeList(object):
 			else:
 				return node
 		elif k < rank:
-				return AVLTreeList.recRetrieve(node.left, k, val)
+			return AVLTreeList.recRetrieve(node.left, k, val)
 		else:
 			return AVLTreeList.recRetrieve(node.right, k-rank, val)
 
