@@ -201,20 +201,6 @@ class AVLNode(object):
 		self.size = self.left.size + self.right.size + 1
 		return None
 
-	"""
-	Increases the size of the node.
-	"""
-	def incSize(self):
-		self.size += 1
-		return None
-
-	"""
-	Decreases the size of the node.
-	"""
-	def decSize(self):
-		self.size -= 1
-		return None
-
 	"""Returns whether self is not a virtual node.
 
 	@rtype: bool
