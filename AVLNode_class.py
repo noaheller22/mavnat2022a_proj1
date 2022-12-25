@@ -693,19 +693,28 @@ class AVLTreeList(object):
 		dif = abs((self.getRoot().getHeight()-lst.getRoot().getHeight()))
 		sizeFirst = self.getRoot().getSize()
 		sizeAfter = lst.getRoot().getSize()
+		if sizeAfter == 1:
+			self.insert(sizeFirst, lst.getRoot().getValue())
+			return dif
+		if sizeFirst == 1:
+			lst.insert(0, self.getRoot().getValue())
+			self.setRoot(lst.getRoot())
+			self.firstNode = lst.firstNode
+			self.lastNode = lst.lastNode
+			return dif
 		if sizeFirst >= sizeAfter:
-			smallRoot = lst.getRoot()
 			newRoot = self.getRoot()
 			nodeConnect = lst.firstNode
 			lst.delete(0)
+			smallRoot = lst.getRoot()
 			curNode = self.lastNode
 			targetSize = sizeAfter-1
 			isLeft = True
 		else:
-			smallRoot = self.getRoot()
 			newRoot = lst.getRoot()
 			nodeConnect = self.lastNode
 			self.delete(sizeFirst-1)
+			smallRoot = self.getRoot()
 			curNode = lst.firstNode
 			targetSize = sizeFirst-1
 			isLeft = False
