@@ -680,8 +680,6 @@ class AVLTreeList(object):
 	@returns: the absolute value of the difference between the height of the AVL trees joined
 	"""
 	def concat(self, lst):
-		if lst.getRoot() == None:
-			return self.getRoot().getHeight()
 		if self.getRoot() == None:
 			if lst.getRoot() != None:
 				self.setRoot(lst.getRoot())
@@ -690,6 +688,8 @@ class AVLTreeList(object):
 				return lst.getRoot().getHeight()
 			else:
 				return 0
+		if lst.getRoot() == None:
+			return self.getRoot().getHeight()
 		dif = abs((self.getRoot().getHeight()-lst.getRoot().getHeight()))
 		sizeFirst = self.getRoot().getSize()
 		sizeAfter = lst.getRoot().getSize()
