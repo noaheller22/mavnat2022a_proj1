@@ -34,7 +34,6 @@ class AVLNode(object):
 		self.BF = 0  # Balance factor
 
 	"""Returns the left child.
-	
 	@rtype: AVLNode
 	@returns: the left child of self, None if there is no left child
 	"""
@@ -83,8 +82,7 @@ class AVLNode(object):
 	def getSize(self):
 		return self.size
 
-	"""Returns the left son, right son and parent of the node
-	
+	"""Returns the left son, right son and parent of the node.
 	@rtype: tuple of AVLNodes
 	@returns: left son, right son, parent
 	"""
@@ -92,7 +90,6 @@ class AVLNode(object):
 		return self.left, self.right, self.parent
 
 	"""Sets left child.
-	
 	@type node: AVLNode
 	@param node: a node
 	"""
@@ -135,7 +132,6 @@ class AVLNode(object):
 		return None
 
 	"""Sets parent and sets the parent's appropriate child to be self.
-	
 	@type node: AVLNode
 	@param node: a node
 	@type is_left: bool
@@ -181,13 +177,13 @@ class AVLNode(object):
 		return None
 
 	"""
-	Sets the size of the node.
+	Sets the size of the node according to the childrens' size.
 	"""
 	def setSize(self):
 		self.size = self.left.size + self.right.size + 1
 		return None
 
-	"""Returns whether self is not a virtual node.
+	"""Returns whether self is a virtual node.
 	@rtype: bool
 	@returns: False if self is a virtual node, True otherwise.
 	"""
@@ -198,7 +194,6 @@ class AVLNode(object):
 			return False
 
 	"""Turns a virtual node into a real leaf node.
-	
 	@pre: node is a virtual node
 	@val type: string
 	"""
@@ -233,7 +228,7 @@ class AVLTreeList(object):
 	def empty(self):
 		return self.root is None
 
-	"""returns the size of the list 
+	"""Returns the size of the list .
 	@rtype: int
 	@returns: the size of the list
 	"""
@@ -286,8 +281,7 @@ class AVLTreeList(object):
 			self.lastNode = node
 		return self.__rebalance(node.getParent())
 
-	"""Func searches for the virtual node which will be in the i'th position if it was real
-	
+	"""Func searches for the virtual node which will be in the i'th position if it was real.
 	@type i: int
 	@param i: the index in which to insert the new node
 	@rtype: AVLNode
@@ -375,7 +369,6 @@ class AVLTreeList(object):
 		return node
 
 	"""Replaces a node with it's successor
-	
 	@type node: AVLNode
 	@param node: a node with 2 sons
 	@rtype: AVLNode
@@ -452,7 +445,7 @@ class AVLTreeList(object):
 
 	"""Rebalances the tree.
 	@type node: AVLNode
-	@param node: the parent of the physically deleted node
+	@param node: the parent of the physically deleted/inserted node, or the node which joins two trees.
 	@type insert: int
 	@param insert: indicates if rebalancing after insertion (0), deletion(1) or join(2)
 	@rtype: int
@@ -500,7 +493,6 @@ class AVLTreeList(object):
 		return rotations
 
 	"""Rotates an edge to the left.
-	
 	@type node1: AVLNode
 	@type node2 = AVLNode
 	@pre: node1 is the right son of node2
