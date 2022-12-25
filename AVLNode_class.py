@@ -1,5 +1,5 @@
 #username - complete info
-#id1      - complete info 
+#id1      - 318969268
 #name1    - Noa Heller
 #id2      - 322291758
 #name2    - Elad Raveh
@@ -11,7 +11,6 @@ A class representing a node in an AVL tree
 """
 class AVLNode(object):
 	"""Constructor, you are allowed to add more fields.
-
 	@type value: str
 	@param value: data of your node
 	@type virtual: boolean
@@ -43,7 +42,6 @@ class AVLNode(object):
 		return self.left
 
 	"""Returns the right child.
-
 	@rtype: AVLNode
 	@returns: the right child of self, None if there is no right child
 	"""
@@ -51,7 +49,6 @@ class AVLNode(object):
 		return self.right
 
 	"""Returns the parent.
-
 	@rtype: AVLNode
 	@returns: the parent of self, None if there is no parent
 	"""
@@ -59,7 +56,6 @@ class AVLNode(object):
 		return self.parent
 
 	"""Return the value.
-
 	@rtype: str
 	@returns: the value of self, None if the node is virtual
 	"""
@@ -67,7 +63,6 @@ class AVLNode(object):
 		return self.value
 
 	"""Returns the height.
-
 	@rtype: int
 	@returns: the height of self, -1 if the node is virtual
 	"""
@@ -75,7 +70,6 @@ class AVLNode(object):
 		return self.height
 
 	"""Returns the balance factor.
-
 	@rtype: int
 	@returns: the BF of self, -1 if the node is virtual
 	"""
@@ -83,7 +77,6 @@ class AVLNode(object):
 		return self.BF
 	
 	"""Returns the size of the sub-tree (including the current node).
-
 	@rtype: int
 	@returns: the size of self, 0 if the node is virtual
 	"""
@@ -108,7 +101,6 @@ class AVLNode(object):
 		return
 
 	"""Sets right child.
-
 	@type node: AVLNode
 	@param node: a node
 	"""
@@ -117,7 +109,6 @@ class AVLNode(object):
 		return None
 
 	"""Sets parent.
-
 	@type node: AVLNode
 	@param node: a node
 	"""
@@ -126,7 +117,6 @@ class AVLNode(object):
 		return None
 
 	"""Sets right child and sets the child's parent to be self.
-
 	@type node: AVLNode
 	@param node: a node
 	"""
@@ -136,7 +126,6 @@ class AVLNode(object):
 		return None
 
 	"""Sets left child and sets the child's parent to be self.
-
 	@type node: AVLNode
 	@param node: a node
 	"""
@@ -161,7 +150,6 @@ class AVLNode(object):
 		return None
 
 	"""Sets value.
-
 	@type value: str
 	@param value: data
 	"""
@@ -170,7 +158,6 @@ class AVLNode(object):
 		return None
 
 	"""Sets the height of the node.
-
 	@type h: int
 	@param h: the height
 	"""
@@ -186,7 +173,6 @@ class AVLNode(object):
 		return None
 
 	"""Sets the balance factor of the node.
-
 	@type bf: int
 	@param bf: the balance factor
 	"""
@@ -202,7 +188,6 @@ class AVLNode(object):
 		return None
 
 	"""Returns whether self is not a virtual node.
-
 	@rtype: bool
 	@returns: False if self is a virtual node, True otherwise.
 	"""
@@ -242,7 +227,6 @@ class AVLTreeList(object):
 		self.lastNode = None
 
 	"""Returns whether the list is empty.
-
 	@rtype: bool
 	@returns: True if the list is empty, False otherwise
 	"""
@@ -250,7 +234,6 @@ class AVLTreeList(object):
 		return self.root is None
 
 	"""returns the size of the list 
-
 	@rtype: int
 	@returns: the size of the list
 	"""
@@ -260,7 +243,6 @@ class AVLTreeList(object):
 		return self.root.getSize()
 
 	"""Retrieves the value of the i'th item in the list.
-
 	@type i: int
 	@param i: index in the list
 	@rtype: str/node.
@@ -282,7 +264,6 @@ class AVLTreeList(object):
 			return AVLTreeList.__recRetrieve(node.getRight(), k - rank - 1)
 
 	"""Inserts val at position i in the list.
-
 	@type i: int
 	@pre: 0 <= i <= self.length()
 	@param i: The intended index in the list to which we insert val
@@ -324,7 +305,6 @@ class AVLTreeList(object):
 		return node
 
 	"""Deletes the i'th item in the list.
-
 	@type i: int
 	@param i: The intended index in the list to be deleted
 	@rtype: int
@@ -350,7 +330,6 @@ class AVLTreeList(object):
 		return self.__rebalance(node.getParent(), 1)
 
 	"""Removes the root of the tree.
-
 	@type node: AVLNode
 	@param node: the node we want to remove from the tree.
 	@rtype: AVLNode.
@@ -375,7 +354,6 @@ class AVLTreeList(object):
 		return node
 
 	"""Removes a non-root node from the tree.
-
 	@type node: AVLNode
 	@param node: the node we want to remove from the tree.
 	@rtype: AVLNode
@@ -435,7 +413,6 @@ class AVLTreeList(object):
 		return node
 
 	"""Returns the node that contains the next item in the list.
-
 	@type node: AVLNode
 	@param node: a node
 	@rtype: node
@@ -455,7 +432,6 @@ class AVLTreeList(object):
 		return parent
 
 	"""Returns the node that contains the previous item in the list.
-
 	@type node: AVLNode
 	@param node: a node
 	@rtype: node
@@ -475,7 +451,6 @@ class AVLTreeList(object):
 		return parent
 
 	"""Rebalances the tree.
-
 	@type node: AVLNode
 	@param node: the parent of the physically deleted node
 	@type insert: int
@@ -502,7 +477,6 @@ class AVLTreeList(object):
 		return rotations
 
 	"""Rotates around a node.
-
 	@type node: AVLNode
 	@rtype: int
 	@return: number of rotations made (single or double rotation)
@@ -553,7 +527,6 @@ class AVLTreeList(object):
 		return None
 
 	"""Rotates an edge to the right.
-
 	@type node1: AVLNode
 	@type node2 = AVLNode
 	@pre: node2 is the left son of node1
@@ -580,7 +553,6 @@ class AVLTreeList(object):
 		return None
 
 	"""Returns the value of the first item in the list.
-
 	@rtype: str
 	@returns: the value of the first item, None if the list is empty
 	"""
@@ -590,7 +562,6 @@ class AVLTreeList(object):
 		return self.firstNode.getValue()
 
 	"""Returns the value of the last item in the list.
-
 	@rtype: str
 	@returns: the value of the last item, None if the list is empty
 	"""
@@ -600,7 +571,6 @@ class AVLTreeList(object):
 		return self.lastNode.getValue()
 
 	"""Returns an array representing list (in order).
-
 	@rtype: list
 	@returns: a list of strings representing the data structure
 	"""
@@ -632,48 +602,152 @@ class AVLTreeList(object):
 		return array
 
 	"""Sort the info values of the list.
-
 	@rtype: list
 	@returns: an AVLTreeList where the values are sorted by the info of the original list.
 	"""
 	def sort(self):
-		return None
+		arrayList = AVLTreeList.listToArray(self)
+		AVLTreeList.mergeSort(arrayList)
+		sortedTree = AVLTreeList()
+		for i in range(len(arrayList)):
+			val = arrayList[i]
+			numOfReb = sortedTree.insert(i, val)
+		
+		return sortedTree
+
+	def mergeSort(array):
+		if len(array) > 1:
+			mid = len(array)//2
+			L = array[:mid]
+			R = array[mid:]
+			AVLTreeList.mergeSort(L)
+			AVLTreeList.mergeSort(R)
+			i = 0
+			j = 0
+			k = 0
+			while i < len(L) and j < len(R):
+				if L[i] <= R[j]:
+					array[k] = L[i]
+					i += 1
+				else:
+					array[k] = R[j]
+					j += 1
+				k += 1
+			while i < len(L):
+				array[k] = L[i]
+				i += 1
+				k += 1
+			while j < len(R):
+				array[k] = R[j]
+				j += 1
+				k += 1
 
 	"""Permute the info values of the list.
-
 	@rtype: list
 	@returns: an AVLTreeList where the values are permuted randomly by the info of the original list. ##Use Randomness
 	"""
 	def permutation(self):
-		return None
+		arrayList = AVLTreeList.listToArray(self)
+		shuffleArray = AVLTreeList.shuffle(arrayList)
+		shuffleTree = AVLTreeList()
+		for i in range(len(shuffleArray)):
+			val = shuffleArray[i]
+			numOfReb = shuffleTree.insert(i, val)
+		
+		return shuffleTree
 
+	"""Shuffle a given array.
+	@type array: array
+	@param array: the array to shuffle
+	@rtype: array
+	@returns: a shuffle array.
+	"""
+	def shuffle(array):
+		length = len(array)
+		for i in range(length):
+			j = random.randint(0, length-1)
+			val1 = array[i]
+			val2 = array[j]
+			array[i] = val2
+			array[j] = val1
+
+		return array
+	
 	"""Concatenates lst to self.
-
 	@type lst: AVLTreeList
 	@param lst: a list to be concatenated after self
 	@rtype: int
 	@returns: the absolute value of the difference between the height of the AVL trees joined
 	"""
 	def concat(self, lst):
-		return None
+		if lst.getRoot() == None:
+			return self.getRoot().getHeight()
+		if self.getRoot() == None:
+			if lst.getRoot() != None:
+				self.setRoot(lst.getRoot())
+				self.firstNode = lst.firstNode
+				self.lastNode = lst.lastNode
+				return lst.getRoot().getHeight()
+			else:
+				return 0
+		dif = abs((self.getRoot().getHeight()-lst.getRoot().getHeight()))
+		sizeFirst = self.getRoot().getSize()
+		sizeAfter = lst.getRoot().getSize()
+		if sizeFirst >= sizeAfter:
+			smallRoot = lst.getRoot()
+			newRoot = self.getRoot()
+			nodeConnect = lst.firstNode
+			lst.delete(0)
+			curNode = self.lastNode
+			targetSize = sizeAfter-1
+			isLeft = True
+		else:
+			smallRoot = self.getRoot()
+			newRoot = lst.getRoot()
+			nodeConnect = self.lastNode
+			self.delete(sizeFirst-1)
+			curNode = lst.firstNode
+			targetSize = sizeFirst-1
+			isLeft = False
+		while curNode.getSize() < targetSize:
+			curNode = curNode.getParent()
+		newParent = curNode.getParent()
+		curNode.setParentAndChild(nodeConnect, isLeft)
+		smallRoot.setParentAndChild(nodeConnect, not isLeft)
+		nodeConnect.setParentAndChild(newParent, not isLeft)
+		self.setRoot(newRoot)
+		self.lastNode = lst.lastNode
+		self.__rebalance(nodeConnect, 2)
+		return dif
 
 	"""Searches for a *value* in the list.
-
 	@type val: str
 	@param val: a value to be searched
 	@rtype: int
 	@returns: the first index that contains val, -1 if not found.
 	"""
 	def search(self, val):
-		return None
+		node = self.firstNode
+		for i in range(self.getRoot().getSize()):
+			if node.getValue() == val:
+				return i
+			node = self.__successor(node)
+		return -1
 
 	"""Returns the root of the tree representing the list.
-
 	@rtype: AVLNode
 	@returns: the root, None if the list is empty
 	"""
 	def getRoot(self):
 		return self.root
 
+	"""sets the root node of the tree
+	@type: AVLNode
+	@param: the new root.
+	"""
+	def setRoot(self, root):
+		self.root = root
+	"""
+	"""
 	def append(self, val):
 		self.insert(self.length(), val)
