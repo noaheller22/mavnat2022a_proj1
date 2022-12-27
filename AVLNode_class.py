@@ -461,8 +461,8 @@ class AVLTreeList(object):
 			node.setBF()
 			parent = node.getParent()
 			if not done:
-				if node.getBF() in [-1, 0, 1] and insert in [0, 1]:
-					done = node.getHeight() == height
+				if node.getBF() in [-1, 0, 1]:
+					done = insert in [0, 1] and node.getHeight() == height
 				else:
 					rotations += self.__rotate(node)
 					done = insert == 0
@@ -677,11 +677,11 @@ class AVLTreeList(object):
 				self.setRoot(lst.getRoot())
 				self.firstNode = lst.firstNode
 				self.lastNode = lst.lastNode
-				return lst.getRoot().getHeight()
+				return lst.getRoot().getHeight() + 1
 			else:
 				return 0
 		if lst.getRoot() == None:
-			return self.getRoot().getHeight()
+			return self.getRoot().getHeight() + 1
 		dif = abs((self.getRoot().getHeight()-lst.getRoot().getHeight()))
 		sizeFirst = self.getRoot().getSize()
 		sizeAfter = lst.getRoot().getSize()
@@ -700,15 +700,15 @@ class AVLTreeList(object):
 			lst.delete(0)
 			smallRoot = lst.getRoot()
 			curNode = self.lastNode
-			targetSize = sizeAfter-1
+			targetSize = sizeAfter - 1
 			isLeft = True
 		else:
 			newRoot = lst.getRoot()
 			nodeConnect = self.lastNode
-			self.delete(sizeFirst-1)
+			self.delete(sizeFirst - 1)
 			smallRoot = self.getRoot()
 			curNode = lst.firstNode
-			targetSize = sizeFirst-1
+			targetSize = sizeFirst - 1
 			isLeft = False
 		while curNode.getSize() < targetSize:
 			curNode = curNode.getParent()
@@ -756,6 +756,7 @@ class AVLTreeList(object):
 	"""
 	def setRoot(self, root):
 		self.root = root
+	
 	"""
 	"""
 	def append(self, val):
