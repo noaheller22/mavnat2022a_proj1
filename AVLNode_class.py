@@ -713,6 +713,12 @@ class AVLTreeList(object):
 		while curNode.getSize() < targetSize:
 			curNode = curNode.getParent()
 		newParent = curNode.getParent()
+		if newParent == None:
+			newParent = curNode
+			if isLeft:
+				curNode = curNode.getRight()
+			else:
+				curNode = curNode.getLeft()
 		curNode.setParentAndChild(nodeConnect, isLeft)
 		smallRoot.setParentAndChild(nodeConnect, not isLeft)
 		nodeConnect.setParentAndChild(newParent, not isLeft)
@@ -729,6 +735,8 @@ class AVLTreeList(object):
 	"""
 	def search(self, val):
 		node = self.firstNode
+		if node == None:
+			return -1
 		for i in range(self.getRoot().getSize()):
 			if node.getValue() == val:
 				return i
