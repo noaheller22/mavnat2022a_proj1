@@ -600,10 +600,7 @@ class AVLTreeList(object):
 	def sort(self):
 		arrayList = AVLTreeList.listToArray(self)
 		AVLTreeList.mergeSort(arrayList)
-		sortedTree = AVLTreeList()
-		for i in range(len(arrayList)):
-			val = arrayList[i]
-			numOfReb = sortedTree.insert(i, val)
+		sortedTree = AVLTreeList.arrayToList(arrayList)
 		
 		return sortedTree
 
@@ -641,10 +638,7 @@ class AVLTreeList(object):
 	def permutation(self):
 		arrayList = AVLTreeList.listToArray(self)
 		shuffleArray = AVLTreeList.shuffle(arrayList)
-		shuffleTree = AVLTreeList()
-		for i in range(len(shuffleArray)):
-			val = shuffleArray[i]
-			numOfReb = shuffleTree.insert(i, val)
+		shuffleTree = AVLTreeList.arrayToList(shuffleArray)
 		
 		return shuffleTree
 
@@ -672,6 +666,7 @@ class AVLTreeList(object):
 	@returns: the absolute value of the difference between the height of the AVL trees joined
 	"""
 	def concat(self, lst):
+		#edge cases empty lists:
 		if self.getRoot() == None:
 			if lst.getRoot() != None:
 				self.setRoot(lst.getRoot())
@@ -682,9 +677,11 @@ class AVLTreeList(object):
 				return 0
 		if lst.getRoot() == None:
 			return self.getRoot().getHeight() + 1
+		###
 		dif = abs((self.getRoot().getHeight()-lst.getRoot().getHeight()))
 		sizeFirst = self.getRoot().getSize()
 		sizeAfter = lst.getRoot().getSize()
+		#edge cases single element lists:
 		if sizeAfter == 1:
 			self.insert(sizeFirst, lst.getRoot().getValue())
 			return dif
@@ -694,6 +691,7 @@ class AVLTreeList(object):
 			self.firstNode = lst.firstNode
 			self.lastNode = lst.lastNode
 			return dif
+		#regular cases:
 		if sizeFirst >= sizeAfter:
 			newRoot = self.getRoot()
 			nodeConnect = lst.firstNode
@@ -758,6 +756,62 @@ class AVLTreeList(object):
 		self.root = root
 	
 	"""
+	makes a list from an array in O(n).
+	@type: array
+	@rtype: AVList
+	@returns: the list
+	"""
+	def arrayToList(array):
+		tree = AVLTreeList.recArrayToList(array, 0, len(array)-1)
+		tree.firstNode = AVLTreeList.edgeNode(tree.getRoot(), True)
+		tree.lastNode = AVLTreeList.edgeNode(tree.getRoot(), False)
+		return tree
+
+	"""
+	makes a list from an array in O(n).
+	@ array type: array
+	@ left, right type:
+	@ array param: the array that will become a list
+	@ left param: the smallest index
+	@ right param: the largest index
+	@rtype: AVList
+	@returns: the list
+	"""
+	def recArrayToList(array, left, right):
+		mid = (left+right)//2
+		tree = AVLTreeList()
+		if right < left:
+			tree.setRoot(AVLNode(None, True))
+			return tree
+		node = AVLNode(array[mid])
+		node.setLeftAndParent(AVLTreeList.recArrayToList(array, left, mid-1).getRoot())
+		node.setRightAndParent(AVLTreeList.recArrayToList(array, mid+1, right).getRoot())
+		node.setBF()
+		node.setToCurHeight()
+		node.setSize()
+		tree.setRoot(node)
+		return tree
+
+	"""
 	"""
 	def append(self, val):
 		self.insert(self.length(), val)
+
+	"""
+	finds the first element or last element in the list.
+	@ root type: AVLNode
+	@ min type: boolean
+	@root param: the root of the AVLTree
+	@min param: true if we are looking for first item, false otherwise.
+	@rtype: AVLNode
+	@returns: the first/last element in the list
+	"""
+	def edgeNode(root, min = True):
+		node = root
+		if min == False:
+			while node.getRight().isRealNode():
+				node = node.getRight()
+		else:
+			while node.getLeft().isRealNode():
+				node = node.getLeft()	
+		return node
