@@ -273,7 +273,7 @@ class AVLTreeList(object):
 			self.firstNode = self.root
 			self.lastNode = self.root
 			return 0
-		node = self.__tree_position(i)
+		node = self.__treePosition(i)
 		node.realFromVirtual(val)
 		if i == 0:
 			self.firstNode = node
@@ -287,7 +287,7 @@ class AVLTreeList(object):
 	@rtype: AVLNode
 	@return: The virtual node which will be made into a real node at the i'th location
 	"""
-	def __tree_position(self, i):
+	def __treePosition(self, i):
 		node = self.root
 		while node.isRealNode():
 			rank = node.getLeft().getSize()
@@ -791,11 +791,6 @@ class AVLTreeList(object):
 		node.setSize()
 		tree.setRoot(node)
 		return tree
-
-	"""
-	"""
-	def append(self, val):
-		self.insert(self.length(), val)
 
 	"""
 	finds the first element or last element in the list.
