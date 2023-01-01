@@ -688,23 +688,11 @@ class AVLTreeList(object):
 				return 0
 		if lst.getRoot() == None:
 			return self.getRoot().getHeight() + 1
-		###
+		#regular cases:
 		heightFirst = self.getRoot().getHeight()
 		heightAfter = lst.getRoot().getHeight()
 		dif = abs(heightFirst-heightAfter)
 		sizeFirst = self.getRoot().getSize()
-		sizeAfter = lst.getRoot().getSize()
-		#edge cases single element lists:
-		if sizeAfter == 1:
-			self.insert(sizeFirst, lst.getRoot().getValue())
-			return dif
-		if sizeFirst == 1:
-			lst.insert(0, self.getRoot().getValue())
-			self.setRoot(lst.getRoot())
-			self.firstNode = lst.firstNode
-			self.lastNode = lst.lastNode
-			return dif
-		#regular cases:
 		if heightFirst >= heightAfter:
 			newRoot = self.getRoot()
 			curNode = self.getRoot()
