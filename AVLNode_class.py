@@ -241,7 +241,8 @@ class AVLTreeList(object):
 	@type i: int
 	@param i: index in the list
 	@rtype: str/node.
-	@returns: the value of the i'th item in the list/ the node that contains the i'th item.
+	@returns: the value of the i'th item in the list.
+	@complexity: O(log n)
 	"""
 	def retrieve(self, i):
 		if self.empty() or i < 0 or i >= self.length():
@@ -565,6 +566,7 @@ class AVLTreeList(object):
 	"""Returns an array representing list (in order).
 	@rtype: list
 	@returns: a list of strings representing the data structure
+	@complexity: O(n)
 	"""
 	def listToArray(self):
 		if self.root is None:
@@ -596,6 +598,7 @@ class AVLTreeList(object):
 	"""Sort the info values of the list.
 	@rtype: list
 	@returns: an AVLTreeList where the values are sorted by the info of the original list.
+	@complexity: O(nlogn)
 	"""
 	def sort(self):
 		arrayList = AVLTreeList.listToArray(self)
@@ -603,7 +606,12 @@ class AVLTreeList(object):
 		sortedTree = AVLTreeList.arrayToList(arrayList)
 		
 		return sortedTree
-
+	"""
+	Sorts arrays based on the known merge sort algorithm
+	@type array: array
+	@param array: array to sort
+	@complexity: O(nlogn)
+	"""
 	def mergeSort(array):
 		if len(array) > 1:
 			mid = len(array)//2
@@ -634,6 +642,7 @@ class AVLTreeList(object):
 	"""Permute the info values of the list.
 	@rtype: list
 	@returns: an AVLTreeList where the values are permuted randomly by the info of the original list. ##Use Randomness
+	@complexity: O(n)
 	"""
 	def permutation(self):
 		arrayList = AVLTreeList.listToArray(self)
@@ -647,6 +656,7 @@ class AVLTreeList(object):
 	@param array: the array to shuffle
 	@rtype: array
 	@returns: a shuffle array.
+	@complexity: O(n)
 	"""
 	def shuffle(array):
 		length = len(array)
@@ -664,6 +674,7 @@ class AVLTreeList(object):
 	@param lst: a list to be concatenated after self
 	@rtype: int
 	@returns: the absolute value of the difference between the height of the AVL trees joined
+	@complexity: min(o(logm), o(logn - logm)) when m is the size of shorter list. (n size of the longer list).
 	"""
 	def concat(self, lst):
 		#edge cases empty lists:
@@ -678,7 +689,9 @@ class AVLTreeList(object):
 		if lst.getRoot() == None:
 			return self.getRoot().getHeight() + 1
 		###
-		dif = abs((self.getRoot().getHeight()-lst.getRoot().getHeight()))
+		heightFirst = self.getRoot().getHeight()
+		heightAfter = lst.getRoot().getHeight()
+		dif = abs(heightFirst-heightAfter)
 		sizeFirst = self.getRoot().getSize()
 		sizeAfter = lst.getRoot().getSize()
 		#edge cases single element lists:
@@ -692,44 +705,70 @@ class AVLTreeList(object):
 			self.lastNode = lst.lastNode
 			return dif
 		#regular cases:
-		if sizeFirst >= sizeAfter:
+		if heightFirst >= heightAfter:
 			newRoot = self.getRoot()
-			nodeConnect = lst.firstNode
-			lst.delete(0)
+			curNode = self.getRoot()
 			smallRoot = lst.getRoot()
-			curNode = self.lastNode
-			targetSize = sizeAfter - 1
-			isLeft = True
+			targetHeight = heightAfter
+			Left = False
 		else:
 			newRoot = lst.getRoot()
-			nodeConnect = self.lastNode
-			self.delete(sizeFirst - 1)
+			curNode = lst.getRoot()
 			smallRoot = self.getRoot()
-			curNode = lst.firstNode
-			targetSize = sizeFirst - 1
-			isLeft = False
-		while curNode.getSize() < targetSize:
-			curNode = curNode.getParent()
+			targetHeight = heightFirst - 1
+			Left = True
+		nodeConnect = AVLNode("connection node")
+		connectIndex = sizeFirst
+		while curNode.getHeight() > targetHeight:
+			if Left:
+				curNode = curNode.getLeft()
+			else:
+				curNode = curNode.getRight()
+		AVLTreeList.setChildsNRebalance(self, lst, curNode,smallRoot, nodeConnect, Left, newRoot, connectIndex)
+		return dif
+
+	"""
+	Makes the necessary connections between nodes, and rebalance the tree.
+	@type self, lst: AVLTreeList
+	@type curNode: AVLNode
+	@type smallRoot: AVLNode
+	@type nodeConnect: AVLNode
+	@type newRoot: AVLNode
+	@type Left: boolean
+	@type connectionIndex: int
+	@param self: the origin list to concat
+	@param lst: the list to concat
+	@param curNode: the node in the larger tree that supposed to be the child of the connectNode
+	@param smallRoot: the root of the smaller tree
+	@param nodeConnect: the node that smallRoot and curNode supposed to be his children
+	@param newRoot: the root of the new list
+	@param Left: should it be left child?
+	@param connectionIndex: index of the connection node
+	@complexity: o(logn - logm) (m the size of the shorter list, n the size of the longer list)
+	"""
+	def setChildsNRebalance(self, lst, curNode,smallRoot, nodeConnect, Left, newRoot, connectIndex):
 		newParent = curNode.getParent()
 		if newParent == None:
 			newParent = curNode
-			if isLeft:
+			if not Left:
 				curNode = curNode.getRight()
 			else:
 				curNode = curNode.getLeft()
-		curNode.setParentAndChild(nodeConnect, isLeft)
-		smallRoot.setParentAndChild(nodeConnect, not isLeft)
-		nodeConnect.setParentAndChild(newParent, not isLeft)
+		curNode.setParentAndChild(nodeConnect, not Left)
+		smallRoot.setParentAndChild(nodeConnect, Left)
+		nodeConnect.setParentAndChild(newParent, Left)
 		self.setRoot(newRoot)
 		self.lastNode = lst.lastNode
 		self.__rebalance(nodeConnect, 2)
-		return dif
+		self.delete(connectIndex)
+		self.__rebalance(nodeConnect.getParent(), 1)
 
 	"""Searches for a *value* in the list.
 	@type val: str
 	@param val: a value to be searched
 	@rtype: int
 	@returns: the first index that contains val, -1 if not found.
+	@complexity: O(n)
 	"""
 	def search(self, val):
 		node = self.firstNode
@@ -760,6 +799,7 @@ class AVLTreeList(object):
 	@type: array
 	@rtype: AVList
 	@returns: the list
+	@complexity: o(n)
 	"""
 	def arrayToList(array):
 		tree = AVLTreeList.recArrayToList(array, 0, len(array)-1)
@@ -776,6 +816,7 @@ class AVLTreeList(object):
 	@ right param: the largest index
 	@rtype: AVList
 	@returns: the list
+	@complexity: O(n)
 	"""
 	def recArrayToList(array, left, right):
 		mid = (left+right)//2
@@ -794,12 +835,13 @@ class AVLTreeList(object):
 
 	"""
 	finds the first element or last element in the list.
-	@ root type: AVLNode
+	@root type: AVLNode
 	@ min type: boolean
 	@root param: the root of the AVLTree
 	@min param: true if we are looking for first item, false otherwise.
 	@rtype: AVLNode
 	@returns: the first/last element in the list
+	@complexity: O(logn)
 	"""
 	def edgeNode(root, min = True):
 		node = root
@@ -810,3 +852,4 @@ class AVLTreeList(object):
 			while node.getLeft().isRealNode():
 				node = node.getLeft()	
 		return node
+	
