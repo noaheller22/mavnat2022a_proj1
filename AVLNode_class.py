@@ -613,29 +613,41 @@ class AVLTreeList(object):
 	@complexity: O(nlogn)
 	"""
 	def mergeSort(array):
-		if len(array) > 1:
-			mid = len(array)//2
-			L = array[:mid]
-			R = array[mid:]
-			AVLTreeList.mergeSort(L)
-			AVLTreeList.mergeSort(R)
-			i = 0
-			j = 0
+		L = 0
+		R = len(array)-1
+		AVLTreeList.recMergeSort(array, L, R)
+	
+	"""
+	Sorts arrays based on the known merge sort algorithm
+	@type array: array
+	@type L, R: int
+	@param array: array to sort
+	@param L: left index
+	@param R: right index
+	@complexity: O(nlogn)
+	"""
+	def recMergeSort(array, L, R):
+		if R-L > 1:
+			mid = (R-L)//2
+			AVLTreeList.recMergeSort(array, L, mid-1)
+			AVLTreeList.recMergeSort(array, mid, R)
+			i = L
+			j = mid
 			k = 0
-			while i < len(L) and j < len(R):
-				if L[i] <= R[j]:
-					array[k] = L[i]
+			while i < mid-1 and j < R:
+				if array[i] <= array[j]:
+					array[k] = array[i]
 					i += 1
 				else:
-					array[k] = R[j]
+					array[k] = array[j]
 					j += 1
 				k += 1
-			while i < len(L):
-				array[k] = L[i]
+			while i < mid-1:
+				array[k] = array[i]
 				i += 1
 				k += 1
-			while j < len(R):
-				array[k] = R[j]
+			while j < R:
+				array[k] = array[j]
 				j += 1
 				k += 1
 
@@ -840,3 +852,4 @@ class AVLTreeList(object):
 			while node.getLeft().isRealNode():
 				node = node.getLeft()	
 		return node
+	
