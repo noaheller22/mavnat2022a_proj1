@@ -674,7 +674,7 @@ class AVLTreeList(object):
 	@param lst: a list to be concatenated after self
 	@rtype: int
 	@returns: the absolute value of the difference between the height of the AVL trees joined
-	@complexity: min(o(logm), o(logn - logm)) when m is the size of shorter list. (n size of the longer list).
+	@complexity: o(logn - logm) when m is the size of shorter list. (n size of the longer list).
 	"""
 	def concat(self, lst):
 		#edge cases empty lists:
@@ -840,4 +840,3 @@ class AVLTreeList(object):
 			while node.getLeft().isRealNode():
 				node = node.getLeft()	
 		return node
-	
