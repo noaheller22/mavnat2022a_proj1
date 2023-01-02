@@ -802,6 +802,8 @@ class AVLTreeList(object):
 	@complexity: o(n)
 	"""
 	def arrayToList(array):
+		if len(array) == 0:
+			return AVLTreeList()
 		tree = AVLTreeList.recArrayToList(array, 0, len(array)-1)
 		tree.firstNode = AVLTreeList.edgeNode(tree.getRoot(), True)
 		tree.lastNode = AVLTreeList.edgeNode(tree.getRoot(), False)
@@ -852,4 +854,3 @@ class AVLTreeList(object):
 			while node.getLeft().isRealNode():
 				node = node.getLeft()	
 		return node
-	
