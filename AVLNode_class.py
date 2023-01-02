@@ -228,7 +228,7 @@ class AVLTreeList(object):
 	def empty(self):
 		return self.root is None
 
-	"""Returns the size of the list .
+	"""Returns the size of the list.
 	@rtype: int
 	@returns: the size of the list
 	"""
@@ -267,6 +267,7 @@ class AVLTreeList(object):
 	@param val: the value we inserts
 	@rtype: list
 	@returns: the number of rebalancing operation due to AVL rebalancing
+	@complexity: O(log n)
 	"""
 	def insert(self, i, val):
 		if self.root is None:
@@ -287,6 +288,7 @@ class AVLTreeList(object):
 	@param i: the index in which to insert the new node
 	@rtype: AVLNode
 	@return: The virtual node which will be made into a real node at the i'th location
+	@complexity: O(log n)
 	"""
 	def __treePosition(self, i):
 		node = self.root
@@ -304,6 +306,7 @@ class AVLTreeList(object):
 	@param i: The intended index in the list to be deleted
 	@rtype: int
 	@returns: the number of rebalancing operation due to AVL rebalancing
+	@complexity: O(log n)
 	"""
 	def delete(self, i):
 		if i >= self.length() or i < 0:
@@ -329,6 +332,7 @@ class AVLTreeList(object):
 	@param node: the node we want to remove from the tree.
 	@rtype: AVLNode.
 	@returns: the physically deleted node.
+	@complexity: O(log n)
 	"""
 	def __removeRoot(self, node):
 		real_left = node.getLeft().isRealNode()
@@ -353,6 +357,7 @@ class AVLTreeList(object):
 	@param node: the node we want to remove from the tree.
 	@rtype: AVLNode
 	@returns: the physically deleted node.
+	@complexity: O(log n)
 	"""
 	def __removeNonRoot(self, node):
 		parent = node.getParent()
@@ -374,6 +379,7 @@ class AVLTreeList(object):
 	@param node: a node with 2 sons
 	@rtype: AVLNode
 	@returns: The new node which was put instead of the successor
+	@complexity: O(log n)
 	"""
 	def __replaceWithSuccessor(self, node):
 		parent = node.getParent()
@@ -411,6 +417,7 @@ class AVLTreeList(object):
 	@param node: a node
 	@rtype: node
 	@returns: a node that contains the next item in the list
+	@complexity: O(log n)
 	"""
 	@staticmethod
 	def __successor(node):
@@ -430,6 +437,7 @@ class AVLTreeList(object):
 	@param node: a node
 	@rtype: node
 	@returns: a node that contains the previous item in the list
+	@complexity: O(log n)
 	"""
 	@staticmethod
 	def __predecessor(node):
@@ -451,6 +459,7 @@ class AVLTreeList(object):
 	@param insert: indicates if rebalancing after insertion (0), deletion(1) or join(2)
 	@rtype: int
 	@returns: number of rotations made
+	@complexity: O(log n)
 	"""
 	def __rebalance(self, node, insert=0):
 		rotations = 0
@@ -474,6 +483,7 @@ class AVLTreeList(object):
 	@type node: AVLNode
 	@rtype: int
 	@return: number of rotations made (single or double rotation)
+	@complexity: O(1)
 	"""
 	def __rotate(self, node):
 		rotations = 1
@@ -577,21 +587,6 @@ class AVLTreeList(object):
 			next_node = AVLTreeList.__successor(node)
 			if next_node.isRealNode():
 				array.append(next_node.getValue())
-			node = next_node
-		return array
-
-	"""
-	Test function, delete when submitting!!!
-	"""
-	def listToHeightsAndSizes(self):
-		if self.root is None:
-			return []
-		node = self.firstNode
-		array = [[node.getHeight(), node.getSize()]]
-		for i in range(self.root.getSize() - 1):
-			next_node = AVLTreeList.__successor(node)
-			if next_node.isRealNode():
-				array.append([next_node.getHeight(), next_node.getSize()])
 			node = next_node
 		return array
 
