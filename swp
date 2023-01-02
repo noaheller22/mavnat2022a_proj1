@@ -1,0 +1,122 @@
+import math
+import sys
+import pdb
+EPSILON = 0.001
+
+def strToFloat(p):
+    for i in range(len(p)):
+        p[i] = float(p[i])
+    return p
+
+def makeNewCentroid(clusterData):
+    numOfelements = len(clusterData)
+    centroidLen = len(clusterData[0])
+    newCentroid = [0]*centroidLen
+    for i in range(numOfelements):
+        for j in range(centroidLen):
+            newCentroid[j] = newCentroid[j] + (clusterData[i][j])
+    for l in range(centroidLen):
+        newCentroid[l] = newCentroid[l]/numOfelements
+    return newCentroid
+
+
+def checkValidation(k, iter):
+    if k.isnumeric() == False:
+        print("Invalid number of clusters!")
+        return False
+    elif iter.isnumeric() == False:
+        print("Invalid maximum iteration!")
+        return False
+    elif (int(iter) < 2) or (int(iter) > 999):
+        print("Invalid maximum iteration!")
+        return False
+    return True
+
+
+def formattingCentroidList(centroidList,k):
+    for i in range(k):
+        for j in range(len(centroidList[0])):
+            centroidList[i][j] = '%.4f' % (centroidList[i][j])
+    return centroidList
+
+def ecDist(point1, point2):
+    d = 0
+    for i in range(len(point1)):
+        d = d + ((point1[i] - point2[i])**2)
+    d = math.sqrt(d)
+    return d
+
+def clusterPoints(input_data, centroidList, k):
+    clusterList = []
+    inputData = open(input_data)
+    for i in range(k):
+        clusterList.append([])
+    while(True):
+        pLine = inputData.readline()
+        strPoint = pLine.split(',')
+        if strPoint == [""]:
+            break
+        point = strToFloat(strPoint)
+        distances = [ecDist(point, centroidList[j]) for j in range(k)]
+        clusterIndex = distances.index(min(distances))
+        clusterList[clusterIndex].append(point)
+    return clusterList
+
+def checkingEpsilon(newCentroids, prevCentroids):
+    for i in range(len(newCentroids)):
+        if ecDist(newCentroids[i], prevCentroids[i]) >= EPSILON:
+            return False
+    return True
+
+def defFirstCentroids(inputData, k):
+    centroidList = []
+    for i in range(k):
+        line = inputData.readline()
+        line = line.split(",")
+        line = strToFloat(line)
+        centroidList.append(line)
+    return centroidList
+
+def printNice(centroidsList):
+    for centroid in centroidsList:
+        print(centroid[0], end ="")
+        for i in range(1, len(centroid)):
+            print(","+centroid[i], end="")
+        print("")
+
+def main(k, iter = 200, input_data = None):
+    if checkValidation(k, iter) == False:
+        return 0
+    k = int(k)
+    iter = int(iter)
+    inputData = open(input_data)
+    for i in range(iter):
+        if i == 0:
+            centroidsList = defFirstCentroids(inputData, k)
+        clusterList = clusterPoints(input_data, centroidsList, k)
+        newCentroidsList = [makeNewCentroid(cluster) for cluster in clusterList]
+        if checkingEpsilon(newCentroidsList, centroidsList):
+            centroidsList = formattingCentroidList(centroidsList, k)
+            printNice(centroidsList)
+            return centroidsList
+        centroidsList = newCentroidsList
+    centroidsList = formattingCentroidList(centroidsList, k)
+    printNice(centroidsList)
+    return centroidsList
+
+if __name__ == '__main__':
+    if len(sys.argv) < 3:
+        print("Invalid number of clusters!")
+    elif len(sys.argv) == 3:
+        main(sys.argv[1], '200', sys.argv[2])
+    else:
+        main(sys.argv[1], sys.argv[2], sys.argv[3])
+
+
+
+
+
+
+
+
+
