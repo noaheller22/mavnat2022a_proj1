@@ -1,4 +1,4 @@
-#username - complete info
+#username - noaheller
 #id1      - 318969268
 #name1    - Noa Heller
 #id2      - 322291758
@@ -602,47 +602,33 @@ class AVLTreeList(object):
 		
 		return sortedTree
 	"""
-	Sorts arrays based on the known merge sort algorithm
+	Sorts arrays with the known merge sort algorithm
 	@type array: array
 	@param array: array to sort
 	@complexity: O(nlogn)
 	"""
 	def mergeSort(array):
-		L = 0
-		R = len(array)-1
-		AVLTreeList.recMergeSort(array, L, R)
-	
-	"""
-	Sorts arrays based on the known merge sort algorithm
-	@type array: array
-	@type L, R: int
-	@param array: array to sort
-	@param L: left index
-	@param R: right index
-	@complexity: O(nlogn)
-	"""
-	def recMergeSort(array, L, R):
-		if R-L > 1:
-			mid = (R-L)//2
-			AVLTreeList.recMergeSort(array, L, mid-1)
-			AVLTreeList.recMergeSort(array, mid, R)
-			i = L
-			j = mid
-			k = 0
-			while i < mid-1 and j < R:
-				if array[i] <= array[j]:
-					array[k] = array[i]
+		if len(array) > 1:
+			mid = len(array)//2
+			L = array[:mid]
+			R = array[mid:]
+			AVLTreeList.mergeSort(L)
+			AVLTreeList.mergeSort(R)
+			i = j = k = 0
+			while i < len(L) and j < len(R):
+				if L[i] <= R[j]:
+					array[k] = L[i]
 					i += 1
 				else:
-					array[k] = array[j]
+					array[k] = R[j]
 					j += 1
 				k += 1
-			while i < mid-1:
-				array[k] = array[i]
+			while i < len(L):
+				array[k] = L[i]
 				i += 1
 				k += 1
-			while j < R:
-				array[k] = array[j]
+			while j < len(R):
+				array[k] = R[j]
 				j += 1
 				k += 1
 
