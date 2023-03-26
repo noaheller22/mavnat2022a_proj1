@@ -1,7 +1,5 @@
-#username - noaheller
-#id1      - 318969268
+
 #name1    - Noa Heller
-#id2      - 322291758
 #name2    - Elad Raveh
 
 import random
